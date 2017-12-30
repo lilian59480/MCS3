@@ -37,5 +37,9 @@ Le projet compilé est disponible dans le dossier build.
 
 Lancer le avec `$ ./MCSQuizz`
 
+## Tests
 
+Nous avons fourni des executables afin de tester le fonctionnement du programme
+
+Tester le projet dans le dossier build avec `$ make test`
 

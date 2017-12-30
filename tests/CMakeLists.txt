@@ -1,0 +1,4 @@
+
+add_executable(SrcProtocoleReponsesReponses src_protocole_reponses_reponses.c)
+target_link_libraries(SrcProtocoleReponsesReponses Protocole Reseau ${CURSES_LIBRARIES} ${CDK_LIBRARIES})
+add_test (NAME SrcProtocoleReponsesReponses COMMAND SrcProtocoleReponsesReponses)

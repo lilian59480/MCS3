@@ -19,11 +19,15 @@ set(CMAKE_VERBOSE_MAKEFILE OFF)
 # On met nos flags
 set(CMAKE_C_FLAGS "${warnings}")
 
+# On active les tests
+enable_testing ()
+
 # On demande d'inclure le dossier
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/src")
 
 add_subdirectory(src/Protocole)
 add_subdirectory(src/Reseau)
+add_subdirectory(tests)
 
 add_executable(MCSQuizz src/main.c)
 target_link_libraries(MCSQuizz Protocole Reseau ${CURSES_LIBRARIES} ${CDK_LIBRARIES})
