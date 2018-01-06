@@ -15,7 +15,7 @@ void reqtostr (char* str, const T_Requete requete)
     sprintf (str, "REQUETE %d\n", requete.identifiant);
 
     // On ajoute les parametres
-    for (i = 0; i < requete.nbr_parametres - 1; i += 1)
+    for (i = 0; i < requete.nbr_parametres; i += 1)
     {
         char parametre[TAILLE_PARAM_MAX * 2];
         char valeur[TAILLE_PARAM_MAX];
@@ -50,7 +50,7 @@ void strtoreq (T_Requete* requete, const char* str)
     // Maintenant, on récupére toutes les lignes
     parametre = strtok (copie_str, "\n");
 
-    while (parametre != NULL || i > NBR_PARAM_MAX)
+    while (parametre != NULL && i < NBR_PARAM_MAX)
     {
         // On récupére chaque morceaux
         sscanf (parametre, "%[^:]:%[^\n]", identifiant, valeur);
@@ -74,5 +74,5 @@ void strtoreq (T_Requete* requete, const char* str)
         parametre = strtok (NULL, "\n");
     }
 
-    requete->nbr_parametres = i + 1;
+    requete->nbr_parametres = i;
 }

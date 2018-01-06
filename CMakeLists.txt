@@ -13,7 +13,7 @@ include_directories(${CURSES_INCLUDE_DIRS})
 include_directories(${CDK_INCLUDE_DIRS})
 
 # On active les erreurs de compilations
-set(warnings "-Wall -Wextra -Werror -pedantic -g -ggdb")
+set(warnings "-Wall -Wextra -Werror -pedantic -g2 -O0 -ggdb")
 # On affiche ce que fait le makefile
 set(CMAKE_VERBOSE_MAKEFILE OFF)
 # On met nos flags

@@ -16,7 +16,7 @@ void reptostr (char* str, const T_Reponse reponse)
     sprintf (str, "REPONSE %d\n", reponse.identifiant);
 
     // On ajoute les parametres
-    for (i = 0; i < reponse.nbr_parametres - 1; i += 1)
+    for (i = 0; i < reponse.nbr_parametres; i += 1)
     {
         char parametre[TAILLE_PARAM_MAX * 2];
         char valeur[TAILLE_PARAM_MAX];
@@ -57,7 +57,7 @@ void strtorep (T_Reponse* reponse, const char* str)
     // Maintenant, on récupére toutes les lignes
     parametre = strtok (copie_str, "\n");
 
-    while (parametre != NULL || i > NBR_PARAM_MAX)
+    while (parametre != NULL && i < NBR_PARAM_MAX)
     {
         // On récupére chaque morceaux
         sscanf (parametre, "%[^:]:%[^\n]", identifiant, valeur);
@@ -81,7 +81,7 @@ void strtorep (T_Reponse* reponse, const char* str)
         parametre = strtok (NULL, "\n");
     }
 
-    reponse->nbr_parametres = i + 1;
+    reponse->nbr_parametres = i;
 }
 
 
