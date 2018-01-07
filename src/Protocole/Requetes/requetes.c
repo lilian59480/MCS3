@@ -21,10 +21,11 @@ void reqtostr (char* str, const T_Requete requete)
         char valeur[TAILLE_PARAM_MAX];
         strncpy (valeur, requete.parametres[i].valeur, TAILLE_PARAM_MAX - 1);
         strnltocr (valeur);
-        sprintf (parametre,"%s:%s\n", requete.parametres[i].nom, valeur);
-        strcat(str,parametre);
+        sprintf (parametre, "%s:%s\n", requete.parametres[i].nom, valeur);
+        strcat (str, parametre);
     }
-    strcat(str,"\n");
+
+    strcat (str, "\n");
 }
 
 /**
@@ -75,4 +76,167 @@ void strtoreq (T_Requete* requete, const char* str)
     }
 
     requete->nbr_parametres = i;
+}
+
+T_Requete creareq_ping()
+{
+    T_Requete requete;
+    memset (&requete, 0, sizeof (T_Requete) );
+    requete.identifiant = 1;
+    requete.nbr_parametres = 0;
+    return requete;
+}
+
+T_Requete creareq_deconnexion()
+{
+    T_Requete requete;
+    memset (&requete, 0, sizeof (T_Requete) );
+    requete.identifiant = 2;
+    requete.nbr_parametres = 0;
+    return requete;
+}
+
+T_Requete creareq_connexion_serveur_central (char* pseudo)
+{
+    T_Requete requete;
+    memset (&requete, 0, sizeof (T_Requete) );
+    requete.identifiant = 100;
+    requete.nbr_parametres = 1;
+    T_Requete_parametre param_pseudo;
+    strcpy (param_pseudo.nom, "Pseudo");
+    strncpy (param_pseudo.valeur, pseudo, TAILLE_PARAM_MAX - 1);
+    param_pseudo.valeur[TAILLE_PARAM_MAX - 1] = '\0';
+    requete.parametres[0] = param_pseudo;
+    return requete;
+}
+
+T_Requete creareq_nombre_clients_connectes()
+{
+    T_Requete requete;
+    memset (&requete, 0, sizeof (T_Requete) );
+    requete.identifiant = 101;
+    requete.nbr_parametres = 0;
+    return requete;
+}
+
+T_Requete creareq_information_client (unsigned long index)
+{
+    T_Requete requete;
+    memset (&requete, 0, sizeof (T_Requete) );
+    requete.identifiant = 102;
+    requete.nbr_parametres = 1;
+    T_Requete_parametre param_index;
+    strcpy (param_index.nom, "Index");
+    sprintf (param_index.valeur, "%ld", index);
+    requete.parametres[0] = param_index;
+    return requete;
+}
+
+T_Requete creareq_passer_mode_partie (char* client_1, char* client_2, char* client_3, unsigned char partenaire)
+{
+    T_Requete requete;
+    memset (&requete, 0, sizeof (T_Requete) );
+    requete.identifiant = 103;
+    requete.nbr_parametres = 4;
+    T_Requete_parametre param_c1;
+    strcpy (param_c1.nom, "Client_1");
+    strncpy (param_c1.valeur, client_1, TAILLE_PARAM_MAX - 1);
+    param_c1.valeur[TAILLE_PARAM_MAX - 1] = '\0';
+    requete.parametres[0] = param_c1;
+    T_Requete_parametre param_c2;
+    strcpy (param_c2.nom, "Client_2");
+    strncpy (param_c2.valeur, client_2, TAILLE_PARAM_MAX - 1);
+    param_c2.valeur[TAILLE_PARAM_MAX - 1] = '\0';
+    requete.parametres[1] = param_c2;
+    T_Requete_parametre param_c3;
+    strcpy (param_c3.nom, "Client_3");
+    strncpy (param_c3.valeur, client_3, TAILLE_PARAM_MAX - 1);
+    param_c3.valeur[TAILLE_PARAM_MAX - 1] = '\0';
+    requete.parametres[2] = param_c3;
+    T_Requete_parametre param_partenaire;
+    strcpy (param_partenaire.nom, "Partenaire");
+    sprintf (param_partenaire.valeur, "%d", partenaire);
+    requete.parametres[3] = param_partenaire;
+    return requete;
+}
+
+T_Requete creareq_port_chat (unsigned char type)
+{
+    T_Requete requete;
+    memset (&requete, 0, sizeof (T_Requete) );
+    requete.identifiant = 104;
+    requete.nbr_parametres = 1;
+    T_Requete_parametre param_type;
+    strcpy (param_type.nom, "Type");
+    sprintf (param_type.valeur, "%d", type);
+    requete.parametres[0] = param_type;
+    return requete;
+}
+
+T_Requete creareq_choix_joueur()
+{
+    T_Requete requete;
+    memset (&requete, 0, sizeof (T_Requete) );
+    requete.identifiant = 105;
+    requete.nbr_parametres = 0;
+    return requete;
+}
+
+T_Requete creareq_demande_partie (short equipe)
+{
+    T_Requete requete;
+    memset (&requete, 0, sizeof (T_Requete) );
+    requete.identifiant = 200;
+    requete.nbr_parametres = 1;
+    T_Requete_parametre param_equipe;
+    strcpy (param_equipe.nom, "Equipe");
+    sprintf (param_equipe.valeur, "%d", equipe);
+    requete.parametres[0] = param_equipe;
+    return requete;
+}
+
+T_Requete creareq_question (char* question)
+{
+    T_Requete requete;
+    memset (&requete, 0, sizeof (T_Requete) );
+    requete.identifiant = 201;
+    requete.nbr_parametres = 1;
+    T_Requete_parametre param_question;
+    strcpy (param_question.nom, "Question");
+    strncpy (param_question.valeur, question, TAILLE_PARAM_MAX - 1);
+    param_question.valeur[TAILLE_PARAM_MAX - 1] = '\0';
+    requete.parametres[0] = param_question;
+    return requete;
+}
+
+T_Requete creareq_valider_reponse (unsigned short valide, char* message)
+{
+    T_Requete requete;
+    memset (&requete, 0, sizeof (T_Requete) );
+    requete.identifiant = 202;
+    requete.nbr_parametres = 2;
+    T_Requete_parametre param_valide;
+    strcpy (param_valide.nom, "Valide");
+    sprintf (param_valide.valeur, "%d", valide);
+    requete.parametres[0] = param_valide;
+    T_Requete_parametre param_message;
+    strcpy (param_message.nom, "Message");
+    strncpy (param_message.valeur, message, TAILLE_PARAM_MAX - 1);
+    param_message.valeur[TAILLE_PARAM_MAX - 1] = '\0';
+    requete.parametres[1] = param_message;
+    return requete;
+}
+
+T_Requete creareq_message_chat (char* message)
+{
+    T_Requete requete;
+    memset (&requete, 0, sizeof (T_Requete) );
+    requete.identifiant = 203;
+    requete.nbr_parametres = 1;
+    T_Requete_parametre param_message;
+    strcpy (param_message.nom, "Message");
+    strncpy (param_message.valeur, message, TAILLE_PARAM_MAX - 1);
+    param_message.valeur[TAILLE_PARAM_MAX - 1] = '\0';
+    requete.parametres[0] = param_message;
+    return requete;
 }

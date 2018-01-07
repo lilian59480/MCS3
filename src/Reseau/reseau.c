@@ -69,7 +69,6 @@ T_Requete readreq (const T_Socket socket)
     T_Buffer buffer;
     T_Requete requete;
     long int length;
-    
     CHECK (length = read (socket, buffer, BUFF_MAX), "ERREUR READ");
     // On va transformer notre buffer en une structure de type T_Requete
     strtoreq (&requete, buffer);
@@ -81,7 +80,6 @@ T_Reponse readrep (const T_Socket socket)
     T_Buffer buffer;
     T_Reponse reponse;
     long int length;
-    
     CHECK (length = read (socket, buffer, BUFF_MAX), "ERREUR READ");
     // On va transformer notre buffer en une structure de type T_Requete
     strtorep (&reponse, buffer);

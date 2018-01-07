@@ -31,4 +31,17 @@ typedef struct
 void reqtostr (char* str, const T_Requete requete);
 void strtoreq (T_Requete* requete, const char* str);
 
+T_Requete creareq_ping();
+T_Requete creareq_deconnexion();
+T_Requete creareq_connexion_serveur_central (char* pseudo);
+T_Requete creareq_nombre_clients_connectes();
+T_Requete creareq_information_client (unsigned long index);
+T_Requete creareq_passer_mode_partie (char* client_1, char* client_2, char* client_3, unsigned char partenaire);
+T_Requete creareq_port_chat (unsigned char type);
+T_Requete creareq_choix_joueur();
+T_Requete creareq_demande_partie (short equipe);
+T_Requete creareq_question (char* question);
+T_Requete creareq_valider_reponse (unsigned short valide, char* message);
+T_Requete creareq_message_chat (char* message);
+
 #endif

@@ -16,13 +16,14 @@ int main2()
         printf ("*%s*\n", requete.parametres[i].nom);
         printf ("*%s*\n", requete.parametres[i].valeur);
     }
-    
+
     char buffer[1000];
     reqtostr (buffer, requete);
-    printf("--%s--",buffer);
-    if (strcmp(requeteTest,buffer) != 0)
+    printf ("--%s--", buffer);
+
+    if (strcmp (requeteTest, buffer) != 0)
     {
-        printf("Erreur potentielle\n");
+        printf ("Erreur potentielle\n");
     }
 
     return 0;
@@ -41,14 +42,14 @@ int main()
         printf ("*%s*\n", reponse.parametres[i].nom);
         printf ("*%s*\n", reponse.parametres[i].valeur);
     }
-    
+
     char buffer[1000];
     reptostr (buffer, reponse);
-    printf("--%s--",buffer);
+    printf ("--%s--", buffer);
 
-    if (strcmp(reponseTest,buffer) != 0)
+    if (strcmp (reponseTest, buffer) != 0)
     {
-        printf("Erreur potentielle\n");
+        printf ("Erreur potentielle\n");
     }
 
     main2();

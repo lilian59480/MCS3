@@ -22,10 +22,11 @@ void reptostr (char* str, const T_Reponse reponse)
         char valeur[TAILLE_PARAM_MAX];
         strncpy (valeur, reponse.parametres[i].valeur, TAILLE_PARAM_MAX - 1);
         strnltocr (valeur);
-        sprintf (parametre,"%s:%s\n", reponse.parametres[i].nom, valeur);
-        strcat(str,parametre);
+        sprintf (parametre, "%s:%s\n", reponse.parametres[i].nom, valeur);
+        strcat (str, parametre);
     }
-    strcat(str,"\n");
+
+    strcat (str, "\n");
 }
 
 /**
