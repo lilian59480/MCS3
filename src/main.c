@@ -3,6 +3,10 @@
  */
 #include "main.h"
 
+/**
+ * Temporaire
+ * \return Temporaire
+ */
 int main2()
 {
     int i;
@@ -29,6 +33,10 @@ int main2()
     return 0;
 }
 
+/**
+ * Temporaire
+ * \return Temporaire
+ */
 int main()
 {
     int i;

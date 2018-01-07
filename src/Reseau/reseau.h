@@ -22,9 +22,13 @@
 #include "../Protocole/Requetes/requetes.h"
 #include "../Utilitaires/utils.h"
 
+/** La taille deu buffer */
 #define BUFF_MAX 1024
 
+/** Alias pour les sockets */
 typedef int T_Socket;
+
+/** Défini un buffer */
 typedef char T_Buffer[BUFF_MAX] ;
 
 T_Socket soinit();

@@ -4,11 +4,21 @@
 
 #include "reseau.h"
 
+/**
+ * Initialise une socket
+ * \retval T_Socket Une socket
+ */
 T_Socket soinit()
 {
     return socket ( AF_INET, SOCK_STREAM, 0 );
 }
 
+/**
+ * Initialise l'adresse et les informations sockaddr_in
+ * \param[in] adresse L'adresse
+ * \param[in] port Le port
+ * \retval struct sockaddr_in* La sockaddr_in initialisé
+ */
 struct sockaddr_in* sockaddrinit (const char* adresse, const int port)
 {
     struct sockaddr_in* as;
@@ -37,11 +47,21 @@ struct sockaddr_in* sockaddrinit (const char* adresse, const int port)
     return as;
 }
 
+/**
+ * Nettoye une sockaddr_in
+ * \param[in] socketaddr Une sockaddr_in initialisé auparavant
+ */
 void sockaddrfree (struct sockaddr_in* socketaddr)
 {
     free (socketaddr);
 }
 
+/**
+ * Envoie une requete par le réseau
+ * \param[in] socket La socket à utiliser
+ * \param[in] requete La requete à envoyer
+ * \retval long int La taille des données envoyées
+ */
 long int writereq (const T_Socket socket, const T_Requete requete)
 {
     T_Buffer buffer;
@@ -53,6 +73,12 @@ long int writereq (const T_Socket socket, const T_Requete requete)
     return length;
 }
 
+/**
+ * Envoie une réponse par le réseau
+ * \param[in] socket La socket à utiliser
+ * \param[in] reponse La reponse à envoyer
+ * \retval long int La taille des données envoyées
+ */
 long int writerep (const T_Socket socket, const T_Reponse reponse)
 {
     T_Buffer buffer;
@@ -64,6 +90,11 @@ long int writerep (const T_Socket socket, const T_Reponse reponse)
     return length;
 }
 
+/**
+ * Lit une requete par le réseau
+ * \param[in] socket La socket à utiliser
+ * \retval T_Requete La requete reçu
+ */
 T_Requete readreq (const T_Socket socket)
 {
     T_Buffer buffer;
@@ -75,6 +106,11 @@ T_Requete readreq (const T_Socket socket)
     return requete;
 }
 
+/**
+ * Lit une reponse par le réseau
+ * \param[in] socket La socket à utiliser
+ * \retval T_Reponse La reponse reçu
+ */
 T_Reponse readrep (const T_Socket socket)
 {
     T_Buffer buffer;

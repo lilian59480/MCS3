@@ -78,6 +78,10 @@ void strtoreq (T_Requete* requete, const char* str)
     requete->nbr_parametres = i;
 }
 
+/**
+ * Crée une requete Ping
+ * \retval T_Requete La requete préparée
+ */
 T_Requete creareq_ping()
 {
     T_Requete requete;
@@ -87,6 +91,10 @@ T_Requete creareq_ping()
     return requete;
 }
 
+/**
+ * Crée une requete Deconnexion
+ * \retval T_Requete La requete préparée
+ */
 T_Requete creareq_deconnexion()
 {
     T_Requete requete;
@@ -96,6 +104,11 @@ T_Requete creareq_deconnexion()
     return requete;
 }
 
+/**
+ * Crée une requete Connexion serveur central
+ * \param[in] pseudo Le pseudo du client
+ * \retval T_Requete La requete préparée
+ */
 T_Requete creareq_connexion_serveur_central (char* pseudo)
 {
     T_Requete requete;
@@ -110,6 +123,10 @@ T_Requete creareq_connexion_serveur_central (char* pseudo)
     return requete;
 }
 
+/**
+ * Crée une requete Nombre de clients connectés
+ * \retval T_Requete La requete préparée
+ */
 T_Requete creareq_nombre_clients_connectes()
 {
     T_Requete requete;
@@ -119,6 +136,11 @@ T_Requete creareq_nombre_clients_connectes()
     return requete;
 }
 
+/**
+ * Crée une requete Information client
+ * \param[in] index L'index du client
+ * \retval T_Requete La requete préparée
+ */
 T_Requete creareq_information_client (unsigned long index)
 {
     T_Requete requete;
@@ -132,6 +154,14 @@ T_Requete creareq_information_client (unsigned long index)
     return requete;
 }
 
+/**
+ * Crée une requete Passer mode partie
+ * \param[in] client_1 Le nom du client 1
+ * \param[in] client_2 Le nom du client 2
+ * \param[in] client_3 Le nom du client 3
+ * \param[in] partenaire Le numéro du partenaire (Entre 1 et 3)
+ * \retval T_Requete La requete préparée
+ */
 T_Requete creareq_passer_mode_partie (char* client_1, char* client_2, char* client_3, unsigned char partenaire)
 {
     T_Requete requete;
@@ -160,6 +190,11 @@ T_Requete creareq_passer_mode_partie (char* client_1, char* client_2, char* clie
     return requete;
 }
 
+/**
+ * Crée une requete Port chat
+ * \param[in] type Le type de chat
+ * \retval T_Requete La requete préparée
+ */
 T_Requete creareq_port_chat (unsigned char type)
 {
     T_Requete requete;
@@ -173,6 +208,10 @@ T_Requete creareq_port_chat (unsigned char type)
     return requete;
 }
 
+/**
+ * Crée une requete Choix joueur
+ * \retval T_Requete La requete préparée
+ */
 T_Requete creareq_choix_joueur()
 {
     T_Requete requete;
@@ -182,6 +221,11 @@ T_Requete creareq_choix_joueur()
     return requete;
 }
 
+/**
+ * Crée une requete Demande partie
+ * \param[in] equipe Si le joueur est avec (1) ou contre nous (-1)
+ * \retval T_Requete La requete préparée
+ */
 T_Requete creareq_demande_partie (short equipe)
 {
     T_Requete requete;
@@ -195,6 +239,11 @@ T_Requete creareq_demande_partie (short equipe)
     return requete;
 }
 
+/**
+ * Crée une requete Question
+ * \param[in] question La question à poser
+ * \retval T_Requete La requete préparée
+ */
 T_Requete creareq_question (char* question)
 {
     T_Requete requete;
@@ -209,6 +258,12 @@ T_Requete creareq_question (char* question)
     return requete;
 }
 
+/**
+ * Crée une requete Valider réponse
+ * \param[in] valide La réponse est valide ou non
+ * \param[in] message Un message supplémentaire
+ * \retval T_Requete La requete préparée
+ */
 T_Requete creareq_valider_reponse (unsigned short valide, char* message)
 {
     T_Requete requete;
@@ -227,6 +282,11 @@ T_Requete creareq_valider_reponse (unsigned short valide, char* message)
     return requete;
 }
 
+/**
+ * Crée une requete Message chat
+ * \param[in] message Le message
+ * \retval T_Requete La requete préparée
+ */
 T_Requete creareq_message_chat (char* message)
 {
     T_Requete requete;
