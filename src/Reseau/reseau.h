@@ -22,7 +22,7 @@
 #include "../Protocole/Requetes/requetes.h"
 #include "../Utilitaires/utils.h"
 
-/** La taille deu buffer */
+/** La taille de buffer */
 #define BUFF_MAX 1024
 
 /** Alias pour les sockets */

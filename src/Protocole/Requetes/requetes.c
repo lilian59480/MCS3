@@ -4,9 +4,9 @@
 #include "requetes.h"
 
 /**
- * Transforme une requete en chaine de caractéres
- * \param[out] str La chaine de caractéres obtenu
- * \param[in] requete La requete a transformer
+ * Transforme une requete en chaine de caractères
+ * \param[out] str La chaine de caractères obtenu
+ * \param[in] requete La requete à transformer
  */
 void reqtostr (char* str, const T_Requete requete)
 {
