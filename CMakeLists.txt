@@ -27,8 +27,13 @@ include_directories("${CMAKE_CURRENT_SOURCE_DIR}/src")
 
 add_subdirectory(src/Protocole)
 add_subdirectory(src/Reseau)
+add_subdirectory("src/Serveur Central")
+add_subdirectory(src/Client)
+add_subdirectory(src/Utilitaires)
 add_subdirectory(tests)
 
-add_executable(MCSQuizz src/main.c)
-target_link_libraries(MCSQuizz Protocole Reseau ${CURSES_LIBRARIES} ${CDK_LIBRARIES})
+add_executable(MCSQuizz_Serveur "src/Serveur Central/serveur_central.c")
+target_link_libraries(MCSQuizz_Serveur Reseau Protocole Utilitaires ${CURSES_LIBRARIES} ${CDK_LIBRARIES})
 
+add_executable(MCSQuizz_Client "src/Client/client.c")
+target_link_libraries(MCSQuizz_Client Reseau Protocole Utilitaires ${CURSES_LIBRARIES} ${CDK_LIBRARIES})

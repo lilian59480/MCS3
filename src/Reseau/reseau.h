@@ -35,6 +35,8 @@ T_Socket soinit();
 
 struct sockaddr_in* sockaddrinit (const char* adresse, const int port);
 
+struct sockaddr_in* sockaddrinit_serv (const int port);
+
 void sockaddrfree (struct sockaddr_in* socketaddr);
 
 long int writereq (const T_Socket socket, const T_Requete requete);

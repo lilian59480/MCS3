@@ -38,6 +38,18 @@
  */
 #define CHECK(statement,mess) if ((statement)<0) { perror(mess); exit(errno); }
 
+/** Ce test permet d'afficher les erreurs en cas de valeur nulle
+ * \param statement Le statement a tester
+ * \param mess Le message d'erreur a afficher
+ */
+#define CHECK_NULL(statement,mess) if ((statement) == NULL) { fprintf(stderr,mess); exit(2); }
+
+/** Ce test permet d'afficher les erreurs pour les appels systèmes qui aurai échoué, sauf pour EINTR, afin de pouvoir nettoyer correctement les ressources
+ * \param statement Le statement a tester
+ * \param mess Le message d'erreur a afficher
+ */
+#define CHECK_NOEINTR(statement,mess) if ((statement)<0 && errno != EINTR) { perror(mess); exit(errno); }
+
 /** \mainpage Description du protocole
  *MCS Quiz
 

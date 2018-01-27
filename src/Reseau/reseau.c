@@ -48,6 +48,30 @@ struct sockaddr_in* sockaddrinit (const char* adresse, const int port)
 }
 
 /**
+ * Initialise l'adresse et les informations sockaddr_in pour une utilisation serveur
+ * \param[in] port Le port
+ * \retval struct sockaddr_in* La sockaddr_in initialisé
+ */
+struct sockaddr_in* sockaddrinit_serv (const int port)
+{
+    struct sockaddr_in* as;
+    as = (struct sockaddr_in*) malloc (sizeof (struct sockaddr_in) );
+
+    if (as == NULL)
+    {
+        return NULL;
+    }
+
+    memset (as, 0, sizeof (struct sockaddr_in) );
+    as->sin_family = AF_INET;
+    as->sin_port = htons (port);
+    as->sin_addr.s_addr = htonl (INADDR_ANY);
+    memset ( as->sin_zero, 0, 8 );
+    return as;
+}
+
+
+/**
  * Nettoye une sockaddr_in
  * \param[in] socketaddr Une sockaddr_in initialisé auparavant
  */
