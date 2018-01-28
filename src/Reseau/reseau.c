@@ -125,6 +125,13 @@ T_Requete readreq (const T_Socket socket)
     T_Requete requete;
     long int length;
     CHECK (length = read (socket, buffer, BUFF_MAX), "ERREUR READ");
+
+    // Si length est "gal à 0, on essaye de se deconnecter
+    if (length == 0)
+    {
+        return creareq_deconnexion();
+    }
+
     // On va transformer notre buffer en une structure de type T_Requete
     strtoreq (&requete, buffer);
     return requete;

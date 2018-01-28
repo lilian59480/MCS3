@@ -86,7 +86,7 @@ T_Requete creareq_ping()
 {
     T_Requete requete;
     memset (&requete, 0, sizeof (T_Requete) );
-    requete.identifiant = 1;
+    requete.identifiant = REQ_CODE_PING;
     requete.nbr_parametres = 0;
     return requete;
 }
@@ -99,7 +99,7 @@ T_Requete creareq_deconnexion()
 {
     T_Requete requete;
     memset (&requete, 0, sizeof (T_Requete) );
-    requete.identifiant = 2;
+    requete.identifiant = REQ_CODE_DECONNEXION;
     requete.nbr_parametres = 0;
     return requete;
 }
@@ -113,7 +113,7 @@ T_Requete creareq_connexion_serveur_central (char* pseudo)
 {
     T_Requete requete;
     memset (&requete, 0, sizeof (T_Requete) );
-    requete.identifiant = 100;
+    requete.identifiant = REQ_CODE_CONNEXION_SERVEUR_CENTRAL;
     requete.nbr_parametres = 1;
     T_Requete_parametre param_pseudo;
     strcpy (param_pseudo.nom, "Pseudo");
@@ -131,7 +131,7 @@ T_Requete creareq_nombre_clients_connectes()
 {
     T_Requete requete;
     memset (&requete, 0, sizeof (T_Requete) );
-    requete.identifiant = 101;
+    requete.identifiant = REQ_CODE_NOMBRE_CLIENTS_CONNECTES;
     requete.nbr_parametres = 0;
     return requete;
 }
@@ -145,7 +145,7 @@ T_Requete creareq_information_client (unsigned long index)
 {
     T_Requete requete;
     memset (&requete, 0, sizeof (T_Requete) );
-    requete.identifiant = 102;
+    requete.identifiant = REQ_CODE_INFORMATION_CLIENT;
     requete.nbr_parametres = 1;
     T_Requete_parametre param_index;
     strcpy (param_index.nom, "Index");
@@ -166,7 +166,7 @@ T_Requete creareq_passer_mode_partie (char* client_1, char* client_2, char* clie
 {
     T_Requete requete;
     memset (&requete, 0, sizeof (T_Requete) );
-    requete.identifiant = 103;
+    requete.identifiant = REQ_CODE_PASSER_MODE_PARTIE;
     requete.nbr_parametres = 4;
     T_Requete_parametre param_c1;
     strcpy (param_c1.nom, "Client_1");
@@ -199,7 +199,7 @@ T_Requete creareq_port_chat (unsigned char type)
 {
     T_Requete requete;
     memset (&requete, 0, sizeof (T_Requete) );
-    requete.identifiant = 104;
+    requete.identifiant = REQ_CODE_PORT_CHAT;
     requete.nbr_parametres = 1;
     T_Requete_parametre param_type;
     strcpy (param_type.nom, "Type");
@@ -216,7 +216,7 @@ T_Requete creareq_choix_joueur()
 {
     T_Requete requete;
     memset (&requete, 0, sizeof (T_Requete) );
-    requete.identifiant = 105;
+    requete.identifiant = REQ_CODE_CHOIX_JOUEUR;
     requete.nbr_parametres = 0;
     return requete;
 }
@@ -230,7 +230,7 @@ T_Requete creareq_demande_partie (short equipe)
 {
     T_Requete requete;
     memset (&requete, 0, sizeof (T_Requete) );
-    requete.identifiant = 200;
+    requete.identifiant = REQ_CODE_DEMANDE_PARTIE;
     requete.nbr_parametres = 1;
     T_Requete_parametre param_equipe;
     strcpy (param_equipe.nom, "Equipe");
@@ -248,7 +248,7 @@ T_Requete creareq_question (char* question)
 {
     T_Requete requete;
     memset (&requete, 0, sizeof (T_Requete) );
-    requete.identifiant = 201;
+    requete.identifiant = REQ_CODE_QUESTION;
     requete.nbr_parametres = 1;
     T_Requete_parametre param_question;
     strcpy (param_question.nom, "Question");
@@ -268,7 +268,7 @@ T_Requete creareq_valider_reponse (unsigned short valide, char* message)
 {
     T_Requete requete;
     memset (&requete, 0, sizeof (T_Requete) );
-    requete.identifiant = 202;
+    requete.identifiant = REQ_CODE_VALIDER_REPONSE;
     requete.nbr_parametres = 2;
     T_Requete_parametre param_valide;
     strcpy (param_valide.nom, "Valide");
@@ -291,7 +291,7 @@ T_Requete creareq_message_chat (char* message)
 {
     T_Requete requete;
     memset (&requete, 0, sizeof (T_Requete) );
-    requete.identifiant = 203;
+    requete.identifiant = REQ_CODE_MESSAGE_CHAT;
     requete.nbr_parametres = 1;
     T_Requete_parametre param_message;
     strcpy (param_message.nom, "Message");

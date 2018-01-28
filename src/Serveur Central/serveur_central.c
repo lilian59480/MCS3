@@ -23,7 +23,9 @@ void deroute_serveur (int signal)
             break;
 
         case SIGINT:
-            fprintf(stderr,"SIGINT : Fermeture du serveur\n");
+            fprintf (stderr, "SIGINT : Fermeture du serveur\n");
+            CHECK (kill (0, SIGUSR1), "ERREUR KILL");
+            sleep (5);
             stop_serveur = !stop_serveur;
             break;
     }
@@ -35,20 +37,27 @@ void deroute_serveur (int signal)
  */
 void deroute_clients (int signal)
 {
-
     switch (signal)
     {
-        case SIGINT:
-            exit(1);
+        case SIGUSR1:
+            exit (1);
             break;
     }
+}
+
+void traiter_requete_ping (T_Socket socket)
+{
+    T_Reponse reponse;
+    reponse = crearep_pong();
+    writerep (socket, reponse);
+    return;
 }
 
 /**
  * Représente la logique du dialogue pour le serveur central
  * \param socket_dialogue La socket de dialogue
  */
-void dialogue_serveur (T_Socket socket_dialogue)
+void dialogue_serveur (T_Socket socket_dialogue, struct sockaddr_in addr_client)
 {
     // Le flag, pour couper la connexion
     char flag = 0;
@@ -60,10 +69,19 @@ void dialogue_serveur (T_Socket socket_dialogue)
         T_Requete requete;
         // On va lire la requete envoyé par le client
         requete = readreq (socket_dialogue);
+        printf ("[%s] Nouvelle requete\n", inet_ntoa (addr_client.sin_addr) );
 
         // On parcours la liste des requetes qu'on connait
         switch (requete.identifiant)
         {
+            case REQ_CODE_PING:
+                traiter_requete_ping (socket_dialogue);
+                break;
+
+            case REQ_CODE_DECONNEXION:
+            default:
+                flag = !flag;
+                break;
         }
     }
 }
@@ -87,6 +105,7 @@ int main()
     // On va dérouter les signaux SIG_CHLD afin d'éviter la création de processus zombies
     handle_signal (SIGCHLD, deroute_serveur, SA_RESTART);
     handle_signal (SIGINT, deroute_serveur, 0);
+    handle_signal (SIGUSR1, SIG_IGN, 0);
     // On va se mettre en mode écoute, afin d'etre pret a recevoir les demandes de connect
     CHECK (listen (serveur, NBR_CLIENTS_MAX), "ERREUR LISTEN")
     stop_serveur = FALSE;
@@ -107,8 +126,6 @@ int main()
 
         if (!stop_serveur)
         {
-            // On affiche l'adresse du client
-            printf ("Par %s\n", inet_ntoa (addr_client.sin_addr) );
             // On va creer cloner le processus afin que notre fils s'occupe du client et
             // Que le père va pouvoir continuer a ecouter d'autre clients
             CHECK (pid = fork(), "ERREUR FORK")
@@ -116,11 +133,12 @@ int main()
 
             if (pid == 0)
             {
-                handle_signal (SIGINT, deroute_clients, 0);
+                handle_signal (SIGUSR1, deroute_clients, 0);
+                handle_signal (SIGINT, SIG_IGN, 0);
                 // Le fils n'a pas besoin de la socket d'écoute
                 close (serveur);
                 // On effectue le dialogue
-                dialogue_serveur (socket_dialogue);
+                dialogue_serveur (socket_dialogue, addr_client);
                 // On ferme la socket de dialogue
                 close (socket_dialogue);
                 // OBLIGATOIRE, SINON IL RISQUE D'AVOIR DES PROBLEMES
@@ -134,6 +152,6 @@ int main()
 
     // Il faut fermer les sockets avec close dès qu'on en a plus besoin
     close (serveur);
-    sockaddrfree(addr_serveur);
+    sockaddrfree (addr_serveur);
     return 0;
 }

@@ -9,6 +9,7 @@ set(Cdk_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 message(STATUS ${CMAKE_MODULE_PATH})
 
 find_package(Cdk REQUIRED)
+find_package(Threads REQUIRED)
 include_directories(${CURSES_INCLUDE_DIRS})
 include_directories(${CDK_INCLUDE_DIRS})
 
@@ -33,7 +34,7 @@ add_subdirectory(src/Utilitaires)
 add_subdirectory(tests)
 
 add_executable(MCSQuizz_Serveur "src/Serveur Central/serveur_central.c")
-target_link_libraries(MCSQuizz_Serveur Reseau Protocole Utilitaires ${CURSES_LIBRARIES} ${CDK_LIBRARIES})
+target_link_libraries(MCSQuizz_Serveur Reseau Protocole Utilitaires ${CURSES_LIBRARIES} ${CDK_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT})
 
 add_executable(MCSQuizz_Client "src/Client/client.c")
-target_link_libraries(MCSQuizz_Client Reseau Protocole Utilitaires ${CURSES_LIBRARIES} ${CDK_LIBRARIES})
+target_link_libraries(MCSQuizz_Client Reseau Protocole Utilitaires ${CURSES_LIBRARIES} ${CDK_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT})

@@ -12,6 +12,18 @@
 // Includes locaux
 #include "../protocole.h"
 
+#define REQ_CODE_PING 1
+#define REQ_CODE_DECONNEXION 2
+#define REQ_CODE_CONNEXION_SERVEUR_CENTRAL 100
+#define REQ_CODE_NOMBRE_CLIENTS_CONNECTES 101
+#define REQ_CODE_INFORMATION_CLIENT 102
+#define REQ_CODE_PASSER_MODE_PARTIE 103
+#define REQ_CODE_PORT_CHAT 104
+#define REQ_CODE_CHOIX_JOUEUR 105
+#define REQ_CODE_DEMANDE_PARTIE 200
+#define REQ_CODE_QUESTION 201
+#define REQ_CODE_VALIDER_REPONSE 202
+#define REQ_CODE_MESSAGE_CHAT 203
 
 /** Défini la structure d'un parametre */
 typedef struct
