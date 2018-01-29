@@ -81,13 +81,13 @@ void strtoreq (T_Requete* requete, const char* str)
 /**
  * Crée une requete Ping
  * \param requete requête à traiter
- * \param param paramètres à trouver 
+ * \param param paramètres à trouver
  * \param resultat paramètres trouvés après traitement
  */
 void get_req_param (const T_Requete requete, const char* param, char* resultat)
 {
     int i;
-    resultat = NULL;
+    strcpy (resultat, "");
 
     for (i = 0; i < requete.nbr_parametres; i++)
     {

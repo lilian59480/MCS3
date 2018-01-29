@@ -85,6 +85,22 @@ void strtorep (T_Reponse* reponse, const char* str)
     reponse->nbr_parametres = i;
 }
 
+void get_rep_param (const T_Reponse reponse, const char* param, char* resultat)
+{
+    int i;
+    strcpy (resultat, "");
+
+    for (i = 0; i < reponse.nbr_parametres; i++)
+    {
+        if (strcmp (param, reponse.parametres[i].nom) == 0)
+        {
+            strcpy (resultat, reponse.parametres[i].valeur);
+            return;
+        }
+    }
+}
+
+
 /**
  * Crée une reponse Pong
  * \retval T_Reponse La reponse préparée

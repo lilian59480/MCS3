@@ -10,7 +10,7 @@
 #include "../Protocole/protocole.h"
 
 /** Nombre maximum de clients autorisé par le serveur */
-#define NBR_CLIENTS_MAX 60
+#define NBR_CLIENTS_MAX 4
 
 #define MUTEX_ECRITURE_FICHIER "/mutex-fichier-info"
 

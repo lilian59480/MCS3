@@ -39,6 +39,7 @@ typedef struct
 
 void reptostr (char* str, const T_Reponse reponse);
 void strtorep (T_Reponse* reponse, const char* str);
+void get_rep_param (const T_Reponse reponse, const char* param, char* resultat);
 
 T_Reponse crearep_pong();
 T_Reponse crearep_requete_invalide();

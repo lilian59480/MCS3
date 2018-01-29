@@ -5,9 +5,9 @@
 
 
 /**
- * 
+ *
  * \param signal
- * \param 
+ * \param
  * \param flags
  */
 struct sigaction handle_signal (int signal, void (*handler) (int), int flags)
@@ -22,7 +22,7 @@ struct sigaction handle_signal (int signal, void (*handler) (int), int flags)
 }
 
 /**
- * 
+ *
  * \param signal
  * \param flags
  */

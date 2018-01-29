@@ -108,7 +108,7 @@ void traiter_requete_connexion (T_Socket socket, T_Requete requete, int* positio
     }
 
     T_Info_Joueur joueur;
-    T_Buffer pseudo;
+    T_Buffer pseudo = "";
     get_req_param (requete, "Pseudo", pseudo);
     strcpy (joueur.pseudo, pseudo);
     modifier_info_joueur (infos, joueur, *position_client);
@@ -189,9 +189,11 @@ void dialogue_serveur (T_Socket socket_dialogue, struct sockaddr_in addr_client)
     {
         // Une requete sous forme de structure
         T_Requete requete;
+        T_Buffer buf;
+        reqtostr(buf,requete);
         // On va lire la requete envoyé par le client
         requete = readreq (socket_dialogue);
-        printf ("[%s] Nouvelle requete\n", inet_ntoa (addr_client.sin_addr) );
+        printf ("[%s] Nouvelle requete:%s\n", inet_ntoa (addr_client.sin_addr),buf );
 
         // On parcours la liste des requetes qu'on connait
         switch (requete.identifiant)
@@ -259,7 +261,6 @@ void dialogue_serveur (T_Socket socket_dialogue, struct sockaddr_in addr_client)
                 break;
 
             case REQ_CODE_DECONNEXION:
-            default:
                 flag = !flag;
                 break;
         }
@@ -336,6 +337,8 @@ int main()
     // Il faut fermer les sockets avec close dès qu'on en a plus besoin
     close (serveur);
     sockaddrfree (addr_serveur);
+    CHECK (sem_close (mutex), "ERREUR SEM_CLOSE");
+    CHECK (sem_unlink (MUTEX_ECRITURE_FICHIER), "ERREUR SEM_UNLINK");
     return 0;
 }
 

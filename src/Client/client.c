@@ -61,6 +61,28 @@ void* thread_ping (void* args)
     pthread_exit (NULL);
 }
 
+void message_erreur (char* mesg_erreur)
+{
+    CDKDIALOG* question;
+    char* message[2];
+    const char* bouton[1];
+    T_Buffer temp;
+    bouton[0] = "</B/24>OK";
+    message[0] = "<C></U/B>Erreur";
+    sprintf (temp, "<C>%s", mesg_erreur);
+    message[1] = temp;
+    question = newCDKDialog (screen, CENTER, CENTER,
+                             (CDK_CSTRING2) message, 2,
+                             (CDK_CSTRING2) bouton, 1,
+                             COLOR_PAIR (2) | A_REVERSE,
+                             TRUE, TRUE, FALSE);
+    setCDKDialogBackgroundAttrib (question, COLOR_PAIR (2) );
+    activateCDKDialog (question, 0);
+    eraseCDKDialog (question);
+    destroyCDKDialog (question);
+    refreshCDKScreen (screen);
+}
+
 /**
  * fonction d'envoi d'une requête de deconnexion
  * \param socket socket de liaison vers le serveur
@@ -101,8 +123,28 @@ void dialogue_serveur (T_Socket socket)
     //}
 }
 
-void lister_clients()
+void lister_clients (T_Socket socket)
 {
+    T_Requete requete_nbr;
+    requete_nbr = creareq_nombre_clients_connectes();
+    writereq (socket, requete_nbr);
+    T_Reponse reponse_nbr;
+    reponse_nbr = readrep (socket);
+    int nbr;
+    T_Buffer buf;
+    get_rep_param (reponse_nbr, "Clients", buf);
+    nbr = strtol (buf, NULL, 10);
+    int i;
+
+    for (i = 0; i < nbr; i++)
+    {
+        T_Requete requete;
+        requete = creareq_information_client (i);
+        writereq (socket, requete);
+        T_Reponse reponse;
+        reponse = readrep (socket);
+        wprintw (stdscr, "%d\n",reponse.identifiant);
+    }
 }
 
 /**
@@ -212,16 +254,40 @@ void init_connexion_serveur()
                     T_Reponse reponse;
                     reponse = readrep (client);
 
-                    if (reponse.identifiant != REP_CODE_ACQUITTEMENT)
+                    if (reponse.identifiant == REP_CODE_ACQUITTEMENT)
                     {
                         // Tout est bon, on va pouvoir avancer
                         ready = !ready;
                     }
+                    else
+                    {
+                        // Erreur, mauvaise réponse
+                        T_Buffer mes;
+                        sprintf (mes, "Mauvaise reponse du serveur: Code %d", reponse.identifiant);
+                        message_erreur (mes);
+                        kill (0, SIGINT);
+                    }
                 }
+                else
+                {
+                    T_Buffer mes;
+                    sprintf (mes, "Impossible de se connecter:%s", strerror (errno) );
+                    message_erreur (mes);
+                }
+            }
+            else
+            {
+                T_Buffer mes;
+                sprintf (mes, "Adresse impossible a utiliser:%s", strerror (errno) );
+                message_erreur (mes);
             }
 
             // On efface le message
             eraseCDKLabel (connexion_label);
+        }
+        else
+        {
+            message_erreur ("Donnees manquantes");
         }
 
         // On nettoie

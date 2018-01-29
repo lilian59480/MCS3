@@ -41,5 +41,22 @@
 
 extern CDKSCREEN* screen;
 
+#define NBR_CLIENTS_MAX 60
+
+typedef enum
+{
+    DISPONIBLE,
+    EN_PARTIE,
+} T_Etat_Joueur;
+
+typedef struct
+{
+    char pseudo[TAILLE_PARAM_MAX - 1];
+    unsigned int port;
+    T_Etat_Joueur etat_joueur;
+} T_Info_Joueur;
+
+typedef T_Info_Joueur T_Infos_Joueurs[NBR_CLIENTS_MAX];
+
 #endif
 

@@ -1,5 +1,5 @@
 /**
- * \file fichier_infos.h
+ * \file fichiers_infos.h
  */
 #ifndef H_SERVEUR_CENTRAL_FICHIER_INFOS
 #define H_SERVEUR_CENTRAL_FICHIER_INFOS
