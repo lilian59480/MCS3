@@ -80,8 +80,8 @@ void dialogue_serveur (T_Socket socket)
     //}
 }
 
-void lister_clients() {
-
+void lister_clients()
+{
 }
 
 void init_connexion_serveur()
@@ -182,17 +182,24 @@ void init_connexion_serveur()
                 {
                     // On essaye de se connecter avec une requete
                     T_Requete requete_connexion;
-                    requete_connexion = creareq_connexion_serveur_central(pseudo);
-                    writereq(client,requete_connexion);
+                    requete_connexion = creareq_connexion_serveur_central (pseudo);
+                    writereq (client, requete_connexion);
+                    // On va voir si on a reçu une erreur ou pas
+                    T_Reponse reponse;
+                    reponse = readrep (client);
 
-                    // Tout est bon, on va pouvoir avancer
-                    ready = !ready;
+                    if (reponse.identifiant != REP_CODE_ACQUITTEMENT)
+                    {
+                        // Tout est bon, on va pouvoir avancer
+                        ready = !ready;
+                    }
                 }
             }
 
             // On efface le message
             eraseCDKLabel (connexion_label);
         }
+
         // On nettoye
         freeChar (hote_input);
         freeChar (port_input);
@@ -202,7 +209,7 @@ void init_connexion_serveur()
     // On redessine tous les elements dessines
     refreshCDKScreen (screen);
     // On poursuit le fonctionnement de l'application
-    lister_clients(client);
+    lister_clients (client);
     // On ferme le tout
     close (client);
     sockaddrfree (addr_serveur);

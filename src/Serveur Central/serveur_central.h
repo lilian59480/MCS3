@@ -15,6 +15,8 @@
 #include <arpa/inet.h>
 #include <netdb.h>
 #include <wait.h>
+#include <semaphore.h>
+#include <fcntl.h>
 
 // Includes locaux
 #include "../Protocole/protocole.h"
@@ -23,9 +25,9 @@
 #include "../Reseau/reseau.h"
 #include "../Utilitaires/utils.h"
 #include "../Utilitaires/signaux.h"
-
-/** Nombre maximum de clients autorisé par le serveur */
-#define NBR_CLIENTS_MAX 60
+#include "common.h"
+#include "fichiers_infos.h"
 
 #endif
+
 

@@ -45,12 +45,94 @@ void deroute_clients (int signal)
     }
 }
 
+void envoyer_requete_invalide (T_Socket socket)
+{
+    T_Reponse reponse;
+    reponse = crearep_requete_invalide();
+    writerep (socket, reponse);
+    return;
+}
+
+void envoyer_acquittement (T_Socket socket)
+{
+    T_Reponse reponse;
+    reponse = crearep_acquittement();
+    writerep (socket, reponse);
+    return;
+}
+
 void traiter_requete_ping (T_Socket socket)
 {
     T_Reponse reponse;
     reponse = crearep_pong();
     writerep (socket, reponse);
     return;
+}
+
+void traiter_requete_connexion (T_Socket socket, T_Requete requete, int* position_client, T_Infos_Joueurs infos)
+{
+    if (*position_client != -1)
+    {
+        // Deja connecté, on envoie une erreur
+        envoyer_requete_invalide (socket);
+        return;
+    }
+
+    // Ok
+    *position_client = position_libre_fichier_infos_joueurs (infos);
+
+    if (*position_client == -1)
+    {
+        envoyer_requete_invalide (socket);
+        return;
+    }
+
+    T_Info_Joueur joueur;
+    T_Buffer pseudo;
+    get_req_param (requete, "Pseudo", pseudo);
+    strcpy (joueur.pseudo, pseudo);
+    modifier_info_joueur (infos, joueur, *position_client);
+    envoyer_acquittement (socket);
+}
+
+/**
+ * \todo Retourner le vrai nombre de clients connectes
+ */
+void traiter_requete_nombre_clients_connectes (T_Socket socket, int* position_client, T_Infos_Joueurs infos)
+{
+    if (*position_client == -1)
+    {
+        // Pas connecté, on envoie une erreur
+        envoyer_requete_invalide (socket);
+        return;
+    }
+
+    // Ok
+    // Afin que le compilateur supprime l'avertissement de code non utilisé
+    (void) infos;
+    T_Reponse reponse;
+    reponse = crearep_nombre_clients (NBR_CLIENTS_MAX);
+    writerep (socket, reponse);
+}
+
+void traiter_requete_information_client (T_Socket socket, T_Requete requete, int* position_client, T_Infos_Joueurs infos)
+{
+    if (*position_client == -1)
+    {
+        // Pas connecté, on envoie une erreur
+        envoyer_requete_invalide (socket);
+        return;
+    }
+
+    T_Buffer position;
+    int pos;
+    T_Info_Joueur joueur;
+    get_req_param (requete, "Index", position);
+    pos = strtol (position, NULL, 10);
+    joueur = get_info_joueur (infos, pos);
+    T_Reponse reponse;
+    reponse = crearep_information_client (joueur.pseudo, joueur.port);
+    writerep (socket, reponse);
 }
 
 /**
@@ -61,6 +143,13 @@ void dialogue_serveur (T_Socket socket_dialogue, struct sockaddr_in addr_client)
 {
     // Le flag, pour couper la connexion
     char flag = 0;
+    // Les informations sur les clients
+    T_Infos_Joueurs informations;
+    // La position du client dans le tableau d'informations
+    int position_client = -1;
+    // Première lecture du fichier afin de voir les etats
+    lire_fichier_infos_joueurs (informations);
+    ecrire_fichier_infos_joueurs (informations);
 
     // Tant qu'on a pas eu la requete de coupure
     while (!flag)
@@ -76,6 +165,64 @@ void dialogue_serveur (T_Socket socket_dialogue, struct sockaddr_in addr_client)
         {
             case REQ_CODE_PING:
                 traiter_requete_ping (socket_dialogue);
+                break;
+
+            case REQ_CODE_CONNEXION_SERVEUR_CENTRAL:
+                traiter_requete_connexion (socket_dialogue, requete, &position_client, informations);
+                break;
+
+            case REQ_CODE_NOMBRE_CLIENTS_CONNECTES:
+                traiter_requete_nombre_clients_connectes (socket_dialogue, &position_client, informations);
+                break;
+
+            case REQ_CODE_INFORMATION_CLIENT:
+                traiter_requete_information_client (socket_dialogue, requete, &position_client, informations);
+                break;
+
+            case REQ_CODE_PASSER_MODE_PARTIE:
+                if (position_client != -1)
+                {
+                    // Ok
+                }
+                else
+                {
+                    // Pas connecté, on envoie une erreur
+                    envoyer_requete_invalide (socket_dialogue);
+                }
+
+                break;
+
+            case REQ_CODE_PORT_CHAT:
+                if (position_client != -1)
+                {
+                    // Ok
+                }
+                else
+                {
+                    // Pas connecté, on envoie une erreur
+                    envoyer_requete_invalide (socket_dialogue);
+                }
+
+                break;
+
+            case REQ_CODE_CHOIX_JOUEUR:
+                if (position_client != -1)
+                {
+                    // Ok
+                }
+                else
+                {
+                    // Pas connecté, on envoie une erreur
+                    envoyer_requete_invalide (socket_dialogue);
+                }
+
+                break;
+
+            case REQ_CODE_DEMANDE_PARTIE:
+            case REQ_CODE_QUESTION:
+            case REQ_CODE_VALIDER_REPONSE:
+            case REQ_CODE_MESSAGE_CHAT:
+                envoyer_requete_invalide (socket_dialogue);
                 break;
 
             case REQ_CODE_DECONNEXION:
@@ -106,6 +253,9 @@ int main()
     handle_signal (SIGCHLD, deroute_serveur, SA_RESTART);
     handle_signal (SIGINT, deroute_serveur, 0);
     handle_signal (SIGUSR1, SIG_IGN, 0);
+    // On ouvre nos sémaphores
+    sem_t* mutex;
+    CHECK_SEMFAILED (mutex = sem_open (MUTEX_ECRITURE_FICHIER, O_CREAT | O_EXCL, 0644, 1), "ERREUR SEM_OPEN");
     // On va se mettre en mode écoute, afin d'etre pret a recevoir les demandes de connect
     CHECK (listen (serveur, NBR_CLIENTS_MAX), "ERREUR LISTEN")
     stop_serveur = FALSE;
@@ -155,3 +305,4 @@ int main()
     sockaddrfree (addr_serveur);
     return 0;
 }
+

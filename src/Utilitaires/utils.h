@@ -50,6 +50,12 @@
  */
 #define CHECK_NOEINTR(statement,mess) if ((statement)<0 && errno != EINTR) { perror(mess); exit(errno); }
 
+/** Ce test permet d'afficher les erreurs en cas de semaphore nulle
+ * \param statement Le statement a tester
+ * \param mess Le message d'erreur a afficher
+ */
+#define CHECK_SEMFAILED(statement,mess) if ((statement) == SEM_FAILED) { fprintf(stderr,mess); exit(2); }
+
 /** \mainpage Description du protocole
  *MCS Quiz
 

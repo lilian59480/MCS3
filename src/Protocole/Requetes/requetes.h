@@ -42,6 +42,7 @@ typedef struct
 
 void reqtostr (char* str, const T_Requete requete);
 void strtoreq (T_Requete* requete, const char* str);
+void get_req_param (const T_Requete requete, const char* param, char* resultat);
 
 T_Requete creareq_ping();
 T_Requete creareq_deconnexion();

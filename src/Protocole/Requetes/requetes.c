@@ -78,6 +78,21 @@ void strtoreq (T_Requete* requete, const char* str)
     requete->nbr_parametres = i;
 }
 
+void get_req_param (const T_Requete requete, const char* param, char* resultat)
+{
+    int i;
+    resultat = NULL;
+
+    for (i = 0; i < requete.nbr_parametres; i++)
+    {
+        if (strcmp (param, requete.parametres[i].nom) == 0)
+        {
+            strcpy (resultat, requete.parametres[i].valeur);
+            return;
+        }
+    }
+}
+
 /**
  * Crée une requete Ping
  * \retval T_Requete La requete préparée
