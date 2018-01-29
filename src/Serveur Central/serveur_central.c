@@ -45,6 +45,10 @@ void deroute_clients (int signal)
     }
 }
 
+/**
+ * Fonction d'envoi d'une réponse "requête invalide"
+ * \param socket socket d'envoi de la réponse
+ */
 void envoyer_requete_invalide (T_Socket socket)
 {
     T_Reponse reponse;
@@ -53,6 +57,10 @@ void envoyer_requete_invalide (T_Socket socket)
     return;
 }
 
+/**
+ * Fonction d'envoi d'une réponse "ack"
+ * \param socket socket d'envoi de la réponse
+ */
 void envoyer_acquittement (T_Socket socket)
 {
     T_Reponse reponse;
@@ -60,6 +68,11 @@ void envoyer_acquittement (T_Socket socket)
     writerep (socket, reponse);
     return;
 }
+
+/**
+ * Fonction d'envoi d'une réponse "pong"
+ * \param socket socket d'envoi de la réponse
+ */
 
 void traiter_requete_ping (T_Socket socket)
 {
@@ -69,6 +82,13 @@ void traiter_requete_ping (T_Socket socket)
     return;
 }
 
+/**
+ * Fonction de traitement d'une requête de connexion
+ * \param socket socket d'envoi de la réponse
+ * \param requete requête de connexion reçue
+ * \param position_client position du client
+ * \param infos informations du joueur
+ */
 void traiter_requete_connexion (T_Socket socket, T_Requete requete, int* position_client, T_Infos_Joueurs infos)
 {
     if (*position_client != -1)
@@ -96,6 +116,10 @@ void traiter_requete_connexion (T_Socket socket, T_Requete requete, int* positio
 }
 
 /**
+ * Fonction de traitement d'une requete de demande du nombre de clients connectés
+ * \param socket socket d'envoi de la réponse
+ * \param position_client position du client
+ * \param infos informations du client
  * \todo Retourner le vrai nombre de clients connectes
  */
 void traiter_requete_nombre_clients_connectes (T_Socket socket, int* position_client, T_Infos_Joueurs infos)
@@ -115,6 +139,14 @@ void traiter_requete_nombre_clients_connectes (T_Socket socket, int* position_cl
     writerep (socket, reponse);
 }
 
+
+/**
+ * Fonction de traitement d'une requête de demande d'informations
+ * \param socket socket d'envoi de la réponse
+ * \param requete requête de connexion reçue
+ * \param position_client position du client
+ * \param infos informations du joueur
+ */
 void traiter_requete_information_client (T_Socket socket, T_Requete requete, int* position_client, T_Infos_Joueurs infos)
 {
     if (*position_client == -1)
@@ -138,6 +170,7 @@ void traiter_requete_information_client (T_Socket socket, T_Requete requete, int
 /**
  * Représente la logique du dialogue pour le serveur central
  * \param socket_dialogue La socket de dialogue
+ * \param addr_client addresse du client
  */
 void dialogue_serveur (T_Socket socket_dialogue, struct sockaddr_in addr_client)
 {

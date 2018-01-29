@@ -3,6 +3,13 @@
  */
 #include "signaux.h"
 
+
+/**
+ * 
+ * \param signal
+ * \param 
+ * \param flags
+ */
 struct sigaction handle_signal (int signal, void (*handler) (int), int flags)
 {
     struct sigaction act;
@@ -14,6 +21,11 @@ struct sigaction handle_signal (int signal, void (*handler) (int), int flags)
     return old;
 }
 
+/**
+ * 
+ * \param signal
+ * \param flags
+ */
 struct sigaction ignore_signal (int signal, int flags)
 {
     return handle_signal (signal, SIG_IGN, flags);

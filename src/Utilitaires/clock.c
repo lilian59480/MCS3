@@ -3,6 +3,10 @@
  */
 #include "clock.h"
 
+
+/**
+ * Fonction récupérant la date
+ */
 unsigned long get_clock_time ()
 {
     // On teste si une horloge insensible est disponible
