@@ -18,18 +18,18 @@ Les exemples ici sont pour les systèmes basés sur GNU/Debian
 - GCC `# apt-get install gcc`
 - CMake `# apt-get install cmake`
 - Git `# apt-get install git`
-- Bibliothéque ncurses `# apt-get install libncurses5-dev`
-- Bibliothéque cdk ( Version > 5.0.20161210-1 ) `# apt-get install libcdk5-dev`
+- Bibliothèque ncurses `# apt-get install libncurses5-dev`
+- Bibliothèque cdk ( Version > 5.0.20161210-1 ) `# apt-get install libcdk5-dev`
 
 
 ### Compiler et Installer
 
 Nous avons utilisé CMake afin de simplifier la compilation
 
-- Installer les prérequis
-- Télécharger le zip ou cloner ce repo
-- Déplacer vous dans le répertoire build
-- Executer `$ cmake ..` puis `$ make`
+- Installez les prérequis
+- Téléchargez le zip ou clonez ce repo
+- Déplacez vous dans le répertoire build
+- Executez `$ cmake ..` puis `$ make`
 
 ## Lancer
 

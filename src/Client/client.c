@@ -5,6 +5,11 @@
 
 CDKSCREEN* screen;
 
+
+/**
+ * fonction traitant les signaux reçus
+ * \param signal signal reçu
+ */
 void deroute (int signal)
 {
     switch (signal)
@@ -18,7 +23,10 @@ void deroute (int signal)
     }
 }
 
-
+/**
+ * fonction d'un thread traitant une requête ping
+ * \param args argument
+ */
 void* thread_ping (void* args)
 {
     T_Socket* socket_addr = args;
@@ -53,6 +61,10 @@ void* thread_ping (void* args)
     pthread_exit (NULL);
 }
 
+/**
+ * fonction d'envoi d'une requête de deconnexion
+ * \param socket socket de liaison vers le serveur
+ */
 void deconnexion_serveur (T_Socket socket)
 {
     T_Requete requete_deconnexion;
@@ -60,6 +72,11 @@ void deconnexion_serveur (T_Socket socket)
     writereq (socket, requete_deconnexion);
 }
 
+
+/**
+ * fonction d'envoi d'une requete de connexion
+ * \param socket socket de liaison vers le serveur
+ */
 void connexion_serveur (T_Socket socket)
 {
     while (0)
@@ -69,6 +86,10 @@ void connexion_serveur (T_Socket socket)
     }
 }
 
+/**
+ * fonction de gestion d'un thread de ping
+ * \param socket socket de liaison vers le serveur
+ */
 void dialogue_serveur (T_Socket socket)
 {
     // Démarrage du thread des pings, afin de tester la connexion
@@ -84,13 +105,16 @@ void lister_clients()
 {
 }
 
+/**
+ * fonction gérant l'initialisation du serveur
+ */
 void init_connexion_serveur()
 {
     // Parametres pour la connexion au serveur
     char hote[MCS_CONNEXION_HOTE_MAX + 1];
     int port = 0;
     char pseudo[MCS_CONNEXION_PSEUDO_MAX + 1];
-    // Valeurs récupéré par les saisies
+    // Valeurs récupérées par les saisies
     char* hote_input;
     char* port_input;
     char* pseudo_input;
@@ -200,7 +224,7 @@ void init_connexion_serveur()
             eraseCDKLabel (connexion_label);
         }
 
-        // On nettoye
+        // On nettoie
         freeChar (hote_input);
         freeChar (port_input);
         freeChar (pseudo_input);
