@@ -45,6 +45,10 @@ void deroute_clients (int signal)
     }
 }
 
+/**
+ * Fonction d'envoi d'une requete "pong"
+ * \param socket socket sur laquelle envoyer la réponse
+ */
 void traiter_requete_ping (T_Socket socket)
 {
     T_Reponse reponse;
@@ -53,6 +57,10 @@ void traiter_requete_ping (T_Socket socket)
     return;
 }
 
+/**
+ * Fonction d'envoi d'une réponse "requête invalide"
+ * \param socket socket sur laquelle envoyer la réponse
+ */
 void envoyer_requete_invalide (T_Socket socket)
 {
     T_Reponse reponse;
@@ -61,6 +69,10 @@ void envoyer_requete_invalide (T_Socket socket)
     return;
 }
 
+/**
+ * Fonction de lecture du fichier d'informations du client
+ * \param infos informations du client
+ */
 void lire_fichier_infos_joueurs (T_Infos_Joueurs infos)
 {
     FILE* fichier;
@@ -76,6 +88,10 @@ void lire_fichier_infos_joueurs (T_Infos_Joueurs infos)
     fclose (fichier);
 }
 
+/**
+ * Fonction d'écriture du fichier d'informations du client
+ * \param infos informations du client
+ */
 void ecrire_fichier_infos_joueurs (T_Infos_Joueurs infos)
 {
     FILE* fichier;
@@ -97,6 +113,12 @@ void ecrire_fichier_infos_joueurs (T_Infos_Joueurs infos)
     fclose (fichier);
 }
 
+/**
+ * Fonction de modification du fichier d'informations du client
+ * \param infos informations du client
+ * \param data information à écrire
+ * \param position position de l'info
+ */
 void modifier_info_joueur (T_Infos_Joueurs infos, T_Info_Joueur data, int position)
 {
     lire_fichier_infos_joueurs (infos);
@@ -104,6 +126,10 @@ void modifier_info_joueur (T_Infos_Joueurs infos, T_Info_Joueur data, int positi
     ecrire_fichier_infos_joueurs (infos);
 }
 
+/**
+ * Fonction de recherche de position libre
+ * \param infos informations du client
+ */
 int position_libre_fichier_infos_joueurs (T_Infos_Joueurs infos)
 {
     int pos;
